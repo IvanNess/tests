@@ -4,6 +4,8 @@ console.log(iframe)
 
 window.addEventListener("message", messageHandler, false)
 
+// обработчик сообщения, получаемого от другого домена при отправке наших методов для записи/чтения/удаления
+// event.callback - колбэк функция, передаваемая нам от другого домена
 function messageHandler(event) {
     const { action, value, callback } = event.data
     if (action == 'returnData'){
@@ -14,6 +16,7 @@ function messageHandler(event) {
     }
 }
 
+//метод для записи данных
 function setOtherLocalStorageItem(key, value){
     iframe.contentWindow.postMessage({
         action: 'save',
@@ -22,6 +25,7 @@ function setOtherLocalStorageItem(key, value){
     }, '*')
 }
 
+//метод для чтения данных
 function getOtherLocalStorageItem(key){
     iframe.contentWindow.postMessage({
         action: 'get',
@@ -29,6 +33,7 @@ function getOtherLocalStorageItem(key){
     }, '*')
 }
 
+//метод для удаления данных
 function removeOtherLocalStorageItem(key){
     iframe.contentWindow.postMessage({
         action: 'remove',
